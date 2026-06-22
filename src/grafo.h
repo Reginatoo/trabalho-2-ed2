@@ -1,12 +1,7 @@
 #ifndef GRAFO_H
 #define GRAFO_H
 
-/**
- * @brief ponteiro opaco para a estrutura do grafo viario
- * @details a definicao interna da struct deve existir apenas no grafo.c
- */
-typedef struct grafo *Grafo;
-
+typedef struct grafo* Grafo;
 /**
  * @brief cria um grafo direcionado vazio com um numero inicial de vertices
  * @param numVertices numero inicial de vertices para dimensionar a estrutura
