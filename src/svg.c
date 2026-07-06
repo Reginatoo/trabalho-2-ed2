@@ -17,20 +17,20 @@ void svgFechar(FILE* f) {
 
 void svgDesenharQuadra(FILE* f, double x, double y, double w, double h, const char* cor_preenchimento, const char* cor_borda, double espessura_borda) {
     if (f == NULL) return;
-    fprintf(f, "<rect x=\"%lf\" y=\"%lf\" width=\"%lf\" height=\"%lf\" fill=\"%s\" stroke=\"%s\" stroke-width=\"%lf\" />\n",
+    fprintf(f, "<rect x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\" fill=\"%s\" stroke=\"%s\" stroke-width=\"%f\" />\n",
             x, y, w, h, cor_preenchimento, cor_borda, espessura_borda);
 }
 
 void svgDesenharRetanguloOpaco(FILE* f, double x, double y, double w, double h, const char* cor, double opacidade) {
     if (f == NULL) return;
-    fprintf(f, "<rect x=\"%lf\" y=\"%lf\" width=\"%lf\" height=\"%lf\" fill=\"%s\" fill-opacity=\"%lf\" />\n",
+    fprintf(f, "<rect x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\" fill=\"%s\" fill-opacity=\"%f\" />\n",
             x, y, w, h, cor, opacidade);
 }
 
 void svgDesenharLinha(FILE* f, double x1, double y1, double x2, double y2, const char* cor, double espessura) {
     if (f == NULL) return;
-    fprintf(f, "<line x1=\"%lf\" y1=\"%lf\" x2=\"%lf\" y2=\"%lf\" stroke=\"%s\" stroke-width=\"%lf\" />\n",
-            x1, y1, x2, y2, cor, espessura);
+    fprintf(f, "<line x1=\"%f\" y1=\"%f\" x2=\"%f\" y2=\"%f\" stroke=\"%s\" stroke-width=\"%f\" />\n",
+                x1, y1, x2, y2, cor, espessura);
 }
 
 void svgDesenharCaminho(FILE* f, const char* id, const char* dados_d, const char* cor, double espessura) {

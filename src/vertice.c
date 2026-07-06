@@ -15,9 +15,11 @@ Vertice criarVertice(char* id, double x, double y) {
     }
     
     v->id = (char*)malloc((strlen(id) + 1) * sizeof(char));
-    if (v->id != NULL) {
-        strcpy(v->id, id);
+    if (v->id == NULL) {
+        free(v);
+        return NULL;
     }
+    strcpy(v->id, id);
     
     v->x = x;
     v->y = y;

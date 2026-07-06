@@ -13,16 +13,18 @@ struct quadra {
     double sw;
 };
 
-Quadra criarQuadra(char* cep, double x, double y, double w, double h) {
+QQuadra criarQuadra(char* cep, double x, double y, double w, double h) {
     Quadra q = (Quadra)malloc(sizeof(struct quadra));
     if (q == NULL) {
         return NULL;
     }
     
     q->cep = (char*)malloc((strlen(cep) + 1) * sizeof(char));
-    if (q->cep != NULL) {
-        strcpy(q->cep, cep);
+    if (q->cep == NULL) {
+        free(q);
+        return NULL;
     }
+    strcpy(q->cep, cep);
     
     q->x = x;
     q->y = y;
@@ -76,11 +78,19 @@ void setQuadraCores(Quadra q, char* cfill, char* cstrk, double sw) {
     if (q->cfill != NULL) free(q->cfill);
     if (q->cstrk != NULL) free(q->cstrk);
     
-    q->cfill = (char*)malloc((strlen(cfill) + 1) * sizeof(char));
-    if (q->cfill != NULL) strcpy(q->cfill, cfill);
+    if (cfill != NULL) {
+        q->cfill = (char*)malloc((strlen(cfill) + 1) * sizeof(char));
+        if (q->cfill != NULL) strcpy(q->cfill, cfill);
+    } else {
+        q->cfill = NULL;
+    }
     
-    q->cstrk = (char*)malloc((strlen(cstrk) + 1) * sizeof(char));
-    if (q->cstrk != NULL) strcpy(q->cstrk, cstrk);
+    if (cstrk != NULL) {
+        q->cstrk = (char*)malloc((strlen(cstrk) + 1) * sizeof(char));
+        if (q->cstrk != NULL) strcpy(q->cstrk, cstrk);
+    } else {
+        q->cstrk = NULL;
+    }
     
     q->sw = sw;
 }
