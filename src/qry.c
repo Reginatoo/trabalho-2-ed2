@@ -4,7 +4,7 @@
 #include "qry.h"
 #include "grafo.h"
 #include "geo.h"
-
+.
 void qryProcessar(const char* caminho, Grafo g, Geo geo, FILE* txt, FILE* svg) {
     if (caminho == NULL || g == NULL) return;
 
