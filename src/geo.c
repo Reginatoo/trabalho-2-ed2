@@ -18,6 +18,10 @@ Geo criarGeo(void) {
     g->capacidade = 10;
     g->quantidade = 0;
     g->quadras = (Quadra*)malloc(g->capacidade * sizeof(Quadra));
+    if (g->quadras == NULL) {
+        free(g);
+        return NULL;
+    }
     strcpy(g->cor_preenchimento, "white");
     strcpy(g->cor_borda, "black");
     g->espessura_borda = 1.0;
@@ -72,4 +76,21 @@ int geoLerArquivo(Geo g, char* caminho) {
     }
     fclose(arq);
     return 1;
+}
+void geoDesenhar(Geo g, FILE* svg) {
+    if (g == NULL || svg == NULL) return;
+    for (int i = 0; i < g->quantidade; i++) {
+        Quadra q = g->quadras[i];
+        
+        double x = getQuadraX(q);
+        double y = getQuadraY(q);
+        double w = getQuadraW(q);
+        double h = getQuadraH(q);
+        char* cor_p = getQuadraCfill(q);
+        char* cor_b = getQuadraCstrk(q);
+        double esp = getQuadraSw(q);
+
+        fprintf(svg, "<rect x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\" fill=\"%s\" stroke=\"%s\" stroke-width=\"%f\" />\n",
+                x, y, w, h, cor_p ? cor_p : "white", cor_b ? cor_b : "black", esp);
+    }
 }

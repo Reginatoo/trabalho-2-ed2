@@ -40,4 +40,6 @@ Quadra geoBuscarQuadra(Geo g, char* cep);
  */
 int geoLerArquivo(Geo g, char* caminho);
 
+void geoDesenhar(Geo g, FILE* svg);
+
 #endif // geo_h
