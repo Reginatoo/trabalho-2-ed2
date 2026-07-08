@@ -41,7 +41,7 @@ int viaLerArquivo(Grafo g, const char* caminho) {
             }
             nome[idx] = '\0';
             
-            adicionarAresta(g, i, j, ldir, lesq, cmp, vm, nome);
+            adicionarAresta(g, i, j, cmp, vm, nome);
         }
     }
 
