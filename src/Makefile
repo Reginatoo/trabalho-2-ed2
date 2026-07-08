@@ -1,8 +1,8 @@
 CC = gcc
 CFLAGS = -std=c99 -fstack-protector-all -Wall -Wextra -g
-SRC = $(wildcard src/*.c)
+SRC = $(wildcard *.c)
 OBJ = $(SRC:.c=.o)
-TARGET = ted
+TARGET = ../ted
 
 all: $(TARGET)
 
@@ -13,6 +13,6 @@ $(TARGET): $(OBJ)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f src/*.o $(TARGET)
+	rm -f *.o $(TARGET)
 
 .PHONY: all clean
