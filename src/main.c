@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-
+#include <unistd.h>
 #include "grafo.h"
 #include "via.h"
 #include "geo.h"
@@ -72,7 +72,7 @@ int main(int argc, char *argv[]) {
     char geo_base[256];
     obterNomeBase(geo_base, geo_nome);
 
-    Grafo g = criarGrafo();
+    Grafo g = criarGrafo(15000);
     Geo geo = criarGeo();
 
     if (via_nome) {
