@@ -13,7 +13,7 @@ struct quadra {
     double sw;
 };
 
-QQuadra criarQuadra(char* cep, double x, double y, double w, double h) {
+Quadra criarQuadra(char* cep, double x, double y, double w, double h) {
     Quadra q = (Quadra)malloc(sizeof(struct quadra));
     if (q == NULL) {
         return NULL;

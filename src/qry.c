@@ -26,7 +26,8 @@ void qryProcessar(const char* caminho, Grafo g, Geo geo, FILE* txt, FILE* svg) {
 
     FILE* arq_qry = fopen(caminho, "r");
     if (arq_qry == NULL) return;
-
+char lixo_txt[256];
+    char lixo_svg[256];
     char comando[32];
 
     Registador regs[100]; 
