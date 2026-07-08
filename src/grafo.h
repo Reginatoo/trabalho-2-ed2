@@ -29,8 +29,7 @@ void adicionarVertice(Grafo g, const char* id, double x, double y);
  * @param vm velocidade media em metros por segundo
  * @param nome nome da rua
  */
-void adicionarAresta(Grafo g, const char* v_origem, const char* v_destino, const char* ldir, const char* lesq, double cmp, double vm, const char* nome);
-
+void adicionarAresta(Grafo g, const char* v_origem, const char* v_destino, double cmp, double vm, const char* nome);
 /**
  * @brief atualiza a velocidade media das arestas dentro de uma regiao retangular
  * @param g ponteiro para o grafo
