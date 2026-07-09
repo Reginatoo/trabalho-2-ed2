@@ -22,14 +22,14 @@ int buscarRegistador(Registador regs[], int num_regs, const char* id) {
     return -1;
 }
 
-FILE* arq_qry = fopen(caminho, "r");
-    if (arq_qry == NULL) {
+    void qryProcessar(const char* caminho, Grafo g, Geo geo, FILE* txt, FILE* svg) {
+    if (caminho == NULL || g == NULL) return;
+    
+    FILE* arq_qry = fopen(caminho, "r");
+   if (arq_qry == NULL) {
         fprintf(stderr, "Erro: nao foi possivel abrir o arquivo de consulta '%s'\n", caminho);
         return;
     }
-    FILE* arq_qry = fopen(caminho, "r");
-    fprintf(stderr, "Erro: nao foi possivel abrir o arquivo de consulta '%s'\n", caminho);
-    if (arq_qry == NULL) return;
 char lixo_txt[256];
     char lixo_svg[256];
     char comando[32];

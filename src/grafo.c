@@ -408,6 +408,8 @@ static void gravarCaminho(Grafo g, int* antecessor, int origem, int destino, FIL
         dados_d[0] = '\0';
         sprintf(dados_d, "M %f,%f", g->vertices[caminho[tam-1]].x, g->vertices[caminho[tam-1]].y);
     }
+    const char* rua_atual = NULL;
+    const char* dir_atual = NULL;
 
     for (int i = tam - 1; i > 0; i--) {
         int u = caminho[i];
