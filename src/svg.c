@@ -55,6 +55,6 @@ void svgDesenharCirculoAnimado(FILE* f, const char* id_caminho, const char* cor,
 
 void svgDesenharTexto(FILE* f, double x, double y, const char* texto, const char* cor) {
     if (f == NULL || texto == NULL) return;
-    fprintf(f, "<text x=\"%lf\" y=\"%lf\" fill=\"%s\" font-family=\"sans-serif\" font-size=\"12\" text-anchor=\"middle\">%s</text>\n",
+    fprintf(f, "<text x=\"%lf\" y=\"%lf\" fill=\"%s\" font-family=\"sans-serif\" font-size=\"10\">%s</text>\n",
             x, y, cor, texto);
 }

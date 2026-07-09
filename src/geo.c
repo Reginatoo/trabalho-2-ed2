@@ -90,7 +90,11 @@ void geoDesenhar(Geo g, FILE* svg) {
         char* cor_b = getQuadraCstrk(q);
         double esp = getQuadraSw(q);
 
-        fprintf(svg, "<rect x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\" fill=\"%s\" stroke=\"%s\" stroke-width=\"%f\" />\n",
-                x, y, w, h, cor_p ? cor_p : "white", cor_b ? cor_b : "black", esp);
+        svgDesenharQuadra(svg, x, y, w, h, cor_p, cor_b, esp);
+        
+        char* cep = getQuadraCep(q);
+        if (cep) {
+            svgDesenharTexto(svg, x + 3, y + 12, cep, "black");
+        }
     }
 }
