@@ -429,9 +429,29 @@ static void gravarCaminho(Grafo g, int* antecessor, int origem, int destino, FIL
             a = a->proximo;
         }
         
-        if (fTxt) {
-            fprintf(fTxt, "Siga por %s de %s ate %s\n", rua, g->vertices[u].id, g->vertices[v].id);
+        double dx = g->vertices[v].x - g->vertices[u].x;
+        double dy = g->vertices[v].y - g->vertices[u].y;
+        const char* dir;
+        if (fabs(dx) >= fabs(dy)) {
+            dir = (dx >= 0) ? "oeste" : "leste";
+        } else {
+            dir = (dy >= 0) ? "norte" : "sul";
         }
+
+        if (rua_atual == NULL) {
+
+            rua_atual = rua;
+            dir_atual = dir;
+        } else if (strcmp(rua, rua_atual) != 0) {
+            if (fTxt) {
+                fprintf(fTxt, "Siga na direcao %s na %s ate o cruzamento com a %s\n", dir_atual, rua_atual, rua);
+            }
+            rua_atual = rua;
+            dir_atual = dir;
+        }
+    }
+    if (fTxt && rua_atual != NULL) {
+        fprintf(fTxt, "Siga na direcao %s na %s ate o seu destino\n", dir_atual, rua_atual);
     }
 
     if (fSvg) {
