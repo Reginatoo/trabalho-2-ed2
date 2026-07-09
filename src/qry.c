@@ -22,10 +22,13 @@ int buscarRegistador(Registador regs[], int num_regs, const char* id) {
     return -1;
 }
 
-void qryProcessar(const char* caminho, Grafo g, Geo geo, FILE* txt, FILE* svg) {
-    if (caminho == NULL || g == NULL) return;
-
+FILE* arq_qry = fopen(caminho, "r");
+    if (arq_qry == NULL) {
+        fprintf(stderr, "Erro: nao foi possivel abrir o arquivo de consulta '%s'\n", caminho);
+        return;
+    }
     FILE* arq_qry = fopen(caminho, "r");
+    fprintf(stderr, "Erro: nao foi possivel abrir o arquivo de consulta '%s'\n", caminho);
     if (arq_qry == NULL) return;
 char lixo_txt[256];
     char lixo_svg[256];
@@ -44,8 +47,27 @@ char lixo_txt[256];
             if (fscanf(arq_qry, "%15s %63s %c %lf", reg, cep, &face, &num) == 4) {
                 Quadra q = geoBuscarQuadra(geo, cep);
                 if (q != NULL) {
-                    double exato_x = getQuadraX(q); 
-                    double exato_y = getQuadraY(q); 
+                    double exato_x = getQuadraX(q);
+                    double exato_y = getQuadraY(q);
+                    double larg = getQuadraW(q);
+                    double alt = getQuadraH(q);
+
+                    switch (face) {
+                        case 'S': 
+                            exato_x += num;
+                            break;
+                        case 'N': 
+                            exato_x += num;
+                            exato_y += alt;
+                            break;
+                        case 'L': 
+                            exato_y += num;
+                            break;
+                        case 'O': 
+                            exato_x += larg;
+                            exato_y += num;
+                            break;
+                    }
                     
                     strcpy(regs[num_regs].id, reg);
                     regs[num_regs].x = exato_x;
@@ -54,7 +76,11 @@ char lixo_txt[256];
                     num_regs++;
                     
                     if (txt) fprintf(txt, "Endereco %s/%c/%.2f registado em %s (%.2f, %.2f)\n", cep, face, num, reg, exato_x, exato_y);
-                } else if (txt) {
+                
+                 if (svg) {
+                        svgDesenharLinhaTracejada(svg, exato_x, 0.0, exato_x, exato_y, "red", 1.0);
+                        svgDesenharTexto(svg, exato_x + 2, 10.0, reg, "red");
+                   }}  else if (txt) {
                     fprintf(txt, "Erro: CEP %s nao encontrado.\n", cep);
                 }
             }

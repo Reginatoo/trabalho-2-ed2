@@ -65,7 +65,9 @@ int geoLerArquivo(Geo g, char* caminho) {
     char comando[32];
     while (fscanf(arq, "%s", comando) != EOF) {
         if (strcmp(comando, "cq") == 0) {
-            fscanf(arq, "%s %s %lf", g->cor_preenchimento, g->cor_borda, &g->espessura_borda);
+           char sw_str[32];
+            fscanf(arq, "%31s %63s %63s", sw_str, g->cor_preenchimento, g->cor_borda);
+            g->espessura_borda = atof(sw_str);
         } else if (strcmp(comando, "q") == 0) {
             char cep[64];
             double x, y, w, h;
@@ -91,7 +93,7 @@ void geoDesenhar(Geo g, FILE* svg) {
         char* cor_b = getQuadraCstrk(q);
         double esp = getQuadraSw(q);
         
-svgDesenharQuadra(svg, x, y, w, h, "#FFEBCC", "#00008B", esp);
+        svgDesenharQuadra(svg, x, y, w, h, cor_p, cor_b, esp);
         
         char* cep = getQuadraCep(q);
         if (cep) {
