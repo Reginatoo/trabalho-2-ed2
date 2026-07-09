@@ -76,7 +76,7 @@ void calcularExpansaoViaria(Grafo g, double vl, void* arqSvg);
 void buscarMelhorTrajeto(Grafo g, double x_origem, double y_origem, double x_destino, double y_destino, const char* cor_curto, const char* cor_rapido, void* arqTxt, void* arqSvg);
 
 /**
- * @brief libera a memoria alocada para o grafo
+ * @brief libera a memoria alocada para o grafoo
  * @param g ponteiro para o grafo
  */
 void liberarGrafo(Grafo g);
