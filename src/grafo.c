@@ -5,6 +5,7 @@
 #include <math.h>
 #include "grafo.h"
 #include "filaprioridade.h"
+#include "svg.h"
 
 typedef struct aresta {
     char* v_destino;
@@ -241,8 +242,7 @@ static void tarjanDFS(Grafo g, int u, double vl, int* discovery, int* low, int* 
             double bb_w = (max_x - min_x) < 10 ? 15 : (max_x - min_x + 10);
             double bb_h = (max_y - min_y) < 10 ? 15 : (max_y - min_y + 10);
             
-            fprintf(fSvg, "<rect x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\" fill=\"%s\" fill-opacity=\"0.5\" stroke=\"%s\" stroke-width=\"1\" />\n",
-                    min_x - 5, min_y - 5, bb_w, bb_h, cor_atual, cor_atual);
+            svgDesenharRetanguloOpaco(fSvg, min_x - 5, min_y - 5, bb_w, bb_h, cor_atual, 0.5);
         }
     }
 }
@@ -328,9 +328,8 @@ void calcularExpansaoViaria(Grafo g, double vl, void* arqSvg) {
                 lista[i].ref->vm *= 1.5;
             }
             
-            fprintf(fSvg, "<line x1=\"%f\" y1=\"%f\" x2=\"%f\" y2=\"%f\" stroke=\"red\" stroke-width=\"4\" />\n",
-                    g->vertices[u].x, g->vertices[u].y, g->vertices[v].x, g->vertices[v].y);
-        }
+           svgDesenharLinha(fSvg, g->vertices[u].x, g->vertices[u].y, g->vertices[v].x, g->vertices[v].y, "red", 4.0);  
+         }
     }
 
     destruirUF(uf);
@@ -390,6 +389,7 @@ static int executarDijkstra(Grafo g, int origem, int destino, int* antecessor, d
 }
 
 static void gravarCaminho(Grafo g, int* antecessor, int origem, int destino, FILE* fTxt, FILE* fSvg, const char* cor, int id_animacao) {
+    (void)origem; 
     if (destino == -1 || antecessor[destino] == -1) return;
 
     int* caminho = (int*)malloc(g->quantidade * sizeof(int));
@@ -402,8 +402,11 @@ static void gravarCaminho(Grafo g, int* antecessor, int origem, int destino, FIL
 
     if (fTxt) fprintf(fTxt, "Trajeto:\n");
     
+    char* dados_d = NULL;
     if (fSvg) {
-        fprintf(fSvg, "<path id=\"caminhoAnimado%d\" d=\"M %f,%f", id_animacao, g->vertices[caminho[tam-1]].x, g->vertices[caminho[tam-1]].y);
+        dados_d = (char*)malloc(g->quantidade * 60 * sizeof(char));
+        dados_d[0] = '\0';
+        sprintf(dados_d, "M %f,%f", g->vertices[caminho[tam-1]].x, g->vertices[caminho[tam-1]].y);
     }
 
     for (int i = tam - 1; i > 0; i--) {
@@ -411,7 +414,9 @@ static void gravarCaminho(Grafo g, int* antecessor, int origem, int destino, FIL
         int v = caminho[i - 1];
         
         if (fSvg) {
-            fprintf(fSvg, " L %f,%f", g->vertices[v].x, g->vertices[v].y);
+            char temp[60];
+            sprintf(temp, " L %f,%f", g->vertices[v].x, g->vertices[v].y);
+            strcat(dados_d, temp);
         }
 
         Aresta a = g->vertices[u].adjacentes;
@@ -430,13 +435,13 @@ static void gravarCaminho(Grafo g, int* antecessor, int origem, int destino, FIL
     }
 
     if (fSvg) {
-        fprintf(fSvg, "\" fill=\"none\" stroke=\"%s\" stroke-width=\"3\" />\n", cor);
+        char id_caminho[50];
+        sprintf(id_caminho, "caminhoAnimado%d", id_animacao);
         
-        fprintf(fSvg, "<circle cx=\"0\" cy=\"0\" r=\"5\" fill=\"%s\">\n", cor);
-        fprintf(fSvg, "  <animateMotion dur=\"6s\" repeatCount=\"indefinite\">\n");
-        fprintf(fSvg, "    <mpath xlink:href=\"#caminhoAnimado%d\"/>\n", id_animacao);
-        fprintf(fSvg, "  </animateMotion>\n");
-        fprintf(fSvg, "</circle>\n");
+        svgDesenharCaminho(fSvg, id_caminho, dados_d, cor, 3.0);
+        svgDesenharCirculoAnimado(fSvg, id_caminho, cor, 5.0);
+        
+        free(dados_d);
     }
 
     free(caminho);
@@ -475,11 +480,8 @@ void buscarMelhorTrajeto(Grafo g, double x_origem, double y_origem, double x_des
     }
 
     if (fSvg && (possivel_curto || possivel_rapido)) {
-        fprintf(fSvg, "<circle cx=\"%f\" cy=\"%f\" r=\"10\" fill=\"white\" stroke=\"black\" stroke-width=\"2\" />\n", x_origem, y_origem);
-        fprintf(fSvg, "<text x=\"%f\" y=\"%f\" font-size=\"12\" text-anchor=\"middle\" dy=\"4\" font-weight=\"bold\">I</text>\n", x_origem, y_origem);
-        
-        fprintf(fSvg, "<circle cx=\"%f\" cy=\"%f\" r=\"10\" fill=\"white\" stroke=\"black\" stroke-width=\"2\" />\n", x_destino, y_destino);
-        fprintf(fSvg, "<text x=\"%f\" y=\"%f\" font-size=\"12\" text-anchor=\"middle\" dy=\"4\" font-weight=\"bold\">F</text>\n", x_destino, y_destino);
+        svgDesenharTexto(fSvg, x_origem, y_origem + 4, "I", "black");
+        svgDesenharTexto(fSvg, x_destino, y_destino + 4, "F", "black");
     }
 
     free(antecessor); 

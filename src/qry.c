@@ -4,6 +4,7 @@
 #include "qry.h"
 #include "grafo.h"
 #include "geo.h"
+#include "svg.h"
 
 typedef struct {
     char id[16];
@@ -82,7 +83,6 @@ char lixo_txt[256];
             char cmc[32], cmr[32];
             
             if (fscanf(arq_qry, "%15s %15s %31s %31s", reg1, reg2, cmc, cmr) == 4) {
-                
                 int idx1 = buscarRegistador(regs, num_regs, reg1);
                 int idx2 = buscarRegistador(regs, num_regs, reg2);
                 
@@ -97,10 +97,8 @@ char lixo_txt[256];
                     if (txt) fprintf(txt, "Erro: Registador de origem ou destino nao encontrado no p?\n");
                 }
             }
-        }
+        } 
 
-    fclose(arq_qry);
-}
-
-    fclose(arq_qry);
+    } 
+    fclose(arq_qry); 
 }

@@ -8,6 +8,7 @@
 #include "via.h"
 #include "geo.h"
 #include "qry.h"
+#include "svg.h"
 
 void concatenarCaminho(char *resultado, const char *dir, const char *arquivo) {
     if (dir && strlen(dir) > 0) {
@@ -95,12 +96,10 @@ int main(int argc, char *argv[]) {
         concatenarCaminho(svg_inicial, bsd, geo_base);
         strcat(svg_inicial, ".svg");
 
-        FILE *f_svg = fopen(svg_inicial, "w");
+        FILE *f_svg = svgCriar(svg_inicial);
         if (f_svg) {
-            fprintf(f_svg, "<svg xmlns=\"http://www.w3.org/2000/svg\">\n");
             geoDesenhar(geo, f_svg);
-            fprintf(f_svg, "</svg>\n");
-            fclose(f_svg);
+            svgFechar(f_svg);
         }
     } else {
         char qry_base[256];
@@ -119,18 +118,16 @@ int main(int argc, char *argv[]) {
         strcat(txt_final, ".txt");
 
         FILE *f_txt = fopen(txt_final, "w");
-        FILE *f_svg = fopen(svg_final, "w");
-
+        FILE *f_svg = svgCriar(svg_final);
         if (f_svg) {
-            fprintf(f_svg, "<svg xmlns=\"http://www.w3.org/2000/svg\">\n");
             geoDesenhar(geo, f_svg);
         }
 
         qryProcessar(caminho_qry, g, geo, f_txt, f_svg);
 
         if (f_svg) {
-            fprintf(f_svg, "</svg>\n");
-            fclose(f_svg);
+            svgFechar(f_svg);
+           
         }
         if (f_txt) {
             fclose(f_txt);

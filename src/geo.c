@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "geo.h"
+#include "svg.h"
 #include "quadra.h"
 
 struct geo {
@@ -89,8 +90,8 @@ void geoDesenhar(Geo g, FILE* svg) {
         char* cor_p = getQuadraCfill(q);
         char* cor_b = getQuadraCstrk(q);
         double esp = getQuadraSw(q);
-
-        svgDesenharQuadra(svg, x, y, w, h, cor_p, cor_b, esp);
+        
+svgDesenharQuadra(svg, x, y, w, h, "#FFEBCC", "#00008B", esp);
         
         char* cep = getQuadraCep(q);
         if (cep) {
