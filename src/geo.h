@@ -42,4 +42,4 @@ int geoLerArquivo(Geo g, char* caminho);
 
 void geoDesenhar(Geo g, FILE* svg);
 
-#endif // geo_h
+#endif 

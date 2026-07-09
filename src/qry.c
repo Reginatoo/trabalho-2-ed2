@@ -94,13 +94,13 @@ char lixo_txt[256];
         }
         else if (strcmp(comando, "regs") == 0) {
             double vl;
-            if (fscanf(arq_qry, "%lf %255s %255s", &vl, lixo_txt, lixo_svg) == 3) {
+            if (fscanf(arq_qry, "%lf", &vl) == 1) {
                 calcularComponentesConexos(g, vl, txt, svg);
             }
         } 
         else if (strcmp(comando, "exp") == 0) {
             double vl;
-            if (fscanf(arq_qry, "%lf %255s", &vl, lixo_svg) == 2) {
+            if (fscanf(arq_qry, "%lf", &vl) == 1) {
                 calcularExpansaoViaria(g, vl, svg);
             }
         } 

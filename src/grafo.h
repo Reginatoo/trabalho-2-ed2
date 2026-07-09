@@ -81,4 +81,4 @@ void buscarMelhorTrajeto(Grafo g, double x_origem, double y_origem, double x_des
  */
 void liberarGrafo(Grafo g);
 
-#endif // GRAFO_H
+#endif 

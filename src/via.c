@@ -7,8 +7,10 @@
 int viaLerArquivo(Grafo g, const char* caminho) {
     if (g == NULL || caminho == NULL) return 0;
     FILE* arq = fopen(caminho, "r");
-    if (arq == NULL) return 0;
-
+    if (arq == NULL) {
+    fprintf(stderr, "Erro: nao foi possivel abrir o arquivo de vias '%s'\n", caminho);
+    return 0;
+    }
     int nv;
     if (fscanf(arq, "%d", &nv) == EOF) {
         fclose(arq);
