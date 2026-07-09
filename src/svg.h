@@ -54,6 +54,18 @@ void svgDesenharRetanguloOpaco(FILE* f, double x, double y, double w, double h, 
 void svgDesenharLinha(FILE* f, double x1, double y1, double x2, double y2, const char* cor, double espessura);
 
 /**
+ * @brief desenha uma linha tracejada entre dois pontos usada na marcacao de enderecos
+ * @param f o arquivo svg ativo
+ * @param x1 coordenada x inicial
+ * @param y1 coordenada y inicial
+ * @param x2 coordenada x final
+ * @param y2 coordenada y final
+ * @param cor a cor da linha
+ * @param espessura a espessura da linha
+ */
+void svgDesenharLinhaTracejada(FILE* f, double x1, double y1, double x2, double y2, const char* cor, double espessura);
+
+/**
  * @brief desenha um caminho complexo para guiar a animacao de percurso
  * @param f o arquivo svg ativo
  * @param id o identificador unico do path correspondente

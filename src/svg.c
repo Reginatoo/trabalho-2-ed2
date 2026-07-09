@@ -33,6 +33,13 @@ void svgDesenharLinha(FILE* f, double x1, double y1, double x2, double y2, const
                 x1, y1, x2, y2, cor, espessura);
 }
 
+void svgDesenharLinhaTracejada(FILE* f, double x1, double y1, double x2, double y2, const char* cor, double espessura) {
+    if (f == NULL) return;
+    fprintf(f, "<line x1=\"%f\" y1=\"%f\" x2=\"%f\" y2=\"%f\" stroke=\"%s\" stroke-width=\"%f\" stroke-dasharray=\"5,5\" />\n",
+                x1, y1, x2, y2, cor, espessura);
+}
+
+
 void svgDesenharCaminho(FILE* f, const char* id, const char* dados_d, const char* cor, double espessura) {
     if (f == NULL || dados_d == NULL) return;
     if (id != NULL && id[0] != '\0') {
