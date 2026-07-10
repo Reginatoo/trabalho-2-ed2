@@ -30,8 +30,6 @@ int buscarRegistador(Registador regs[], int num_regs, const char* id) {
         fprintf(stderr, "Erro: nao foi possivel abrir o arquivo de consulta '%s'\n", caminho);
         return;
     }
-char lixo_txt[256];
-    char lixo_svg[256];
     char comando[32];
 
     Registador regs[100]; 
